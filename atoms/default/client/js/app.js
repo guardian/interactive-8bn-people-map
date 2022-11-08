@@ -37,9 +37,8 @@ const svg = d3.select('.dorling-interactive-wrapper')
     .attr('height', height)
 
 const radius = d3.scaleSqrt()
-    .domain([0, 336621])
-    .range([0, 100])
-
+    .domain([0, 150000])
+    .range([0, 60])
 
 const simulation = d3.forceSimulation(world.features)
     .force("x", d3.forceX(d => projection(d.geometry.coordinates)[0]))
@@ -56,7 +55,7 @@ svg.selectAll("circle")
     .data(world.features)
     .enter().append("circle")
     .attr('class', d => d.properties.NAME)
-    .attr("r", d => radius(d.properties.growth_2022))
+    .attr("r", d => radius(d.properties.growth_2021))
     .attr("cx", d => d.x)
     .attr("cy", d => d.y)
     .attr("fill", "steelblue")
@@ -64,10 +63,25 @@ svg.selectAll("circle")
     .attr("stroke", "steelblue");
 
 
-const update = (year, triggerNext) => {
+
+const years = ['2022', '2050', '2100']
+
+
+
+
+
+const update = (year) => {
+
+    console.log(year)
+
+    //let max = d3.max(world.features.map(f => +f.properties["growth_" + year]));
+
+   // radius.domain([0, max])
 
     simulation
-    .force("collide", d3.forceCollide(d => 1 + radius(d.properties["growth_" + year])))
+    .force("collide", d3.forceCollide(d => 2 + radius(d.properties["growth_" + year])))
+    
+    
 
     for (let i = 0; i < 300; i++) {
         simulation.tick();
@@ -77,20 +91,29 @@ const update = (year, triggerNext) => {
 
     svg.selectAll("circle")
     .transition()
-    .duration(500)
+    .duration(100)
     .attr("cy", d => d.y + 'px')
     .attr('cx', d => d.x + 'px')
     .attr("r", d => radius(d.properties["growth_" + year]))
 
-    if(triggerNext && (year < 2100)) {
+    // if(triggerNext && (year < 2050)) {
 
-        wait(75).then(() => update(year + 1, true))
+    //     wait(100).then(() => update(year + 1, true))
 
-    }
+    // }
     
 }
 
 let year = 2022
+
+years.forEach(y => {
+    d3.select('.buttons-wrapper')
+    .append('button')
+    .attr('class', 'button-' + y)
+    .html(y)
+
+    $('.button-' + y).addEventListener('click', () => update(y))
+})
 
 const watchScroll = () => {
     if (atomEl.getBoundingClientRect().top < window.innerHeight * 0.4) {
