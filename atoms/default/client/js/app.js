@@ -37,21 +37,20 @@ const svg = d3.select('.dorling-interactive-wrapper')
 
 
 
-let max = d3.max(world.features.map(f => +f.properties["growth_2022"]));
+let max = d3.max(world.features.map(f => +f.properties["growth_2050"]));
 
 const radius = d3.scaleSqrt()
     .domain([0, max])
     .range([0, 60])
 
+console.log(world)
+
 
 const simulation = d3.forceSimulation(world.features)
     .force("x", d3.forceX(d => projection(d.geometry.coordinates)[0]))
     .force("y", d3.forceY(d => projection(d.geometry.coordinates)[1]))
-    .force("collide", d3.forceCollide(d => 1 + radius(d.properties.growth_2022)))
+    .force("collide", d3.forceCollide(d => 1 + radius(d.properties.growth_2050)))
     .stop()
-
-
-    console.log(world.features)
 
 
 for (let i = 0; i < 300; i++) {
@@ -62,7 +61,7 @@ svg.selectAll("circle")
     .data(world.features)
     .enter().append("circle")
     .attr('class', d => d.properties.NAME)
-    .attr("r", d => radius(d.properties.growth_2022))
+    .attr("r", d => radius(d.properties.growth_2050))
     .attr("cx", d => d.x)
     .attr("cy", d => d.y)
     .attr("fill", "steelblue")
@@ -71,7 +70,7 @@ svg.selectAll("circle")
 
 
 
-const years = ['2022', '2050', '2100']
+const years = ['2050', '2100']
 
 
 const update = (year) => {
@@ -83,9 +82,11 @@ const update = (year) => {
     console.log(max)
 
     radius.domain([0, max])
+    
 
     simulation
     .force("collide", d3.forceCollide(d => 1 + radius(d.properties["growth_" + year])))
+
     
 
     for (let i = 0; i < 300; i++) {
