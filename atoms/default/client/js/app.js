@@ -35,16 +35,15 @@ const svg = d3.select('.dorling-interactive-wrapper')
     .attr('width', width)
     .attr('height', height)
 
+const years = ['2050', '2100']
 
+let year = 2050
 
 let max = d3.max(world.features.map(f => +f.properties["growth_2050"]));
 
 const radius = d3.scaleSqrt()
     .domain([0, max])
-    .range([0, 60])
-
-console.log(world)
-
+    .range([0, 40])
 
 const simulation = d3.forceSimulation(world.features)
     .force("x", d3.forceX(d => projection(d.geometry.coordinates)[0]))
@@ -69,17 +68,17 @@ svg.selectAll("circle")
     .attr("stroke", "steelblue");
 
 
+function ticked(){
 
 const years = ['2050', '2100']
 
+}
 
-const update = (year) => {
+const update = (y) => {
 
-    console.log(year)
+    year = y;
 
     max = d3.max(world.features.map(f => +f.properties["growth_" + year]));
-
-    console.log(max)
 
     radius.domain([0, max])
     
@@ -104,8 +103,6 @@ const update = (year) => {
     
 }
 
-let year = 2022
-
 years.forEach(y => {
     d3.select('.buttons-wrapper')
     .append('button')
@@ -115,16 +112,3 @@ years.forEach(y => {
     $('.button-' + y).addEventListener('click', () => update(y))
 })
 
-// const watchScroll = () => {
-//     if (atomEl.getBoundingClientRect().top < window.innerHeight * 0.4) {
-
-//         wait(300).then(() => update(year, true))
-
-//         console.log(year)
-
-//     } else {
-//         window.requestAnimationFrame(watchScroll)
-//     }
-// }
-
-// window.requestAnimationFrame(watchScroll)
