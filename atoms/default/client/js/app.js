@@ -35,31 +35,31 @@ const svg = d3.select('.dorling-interactive-wrapper')
     .attr('width', width)
     .attr('height', height)
 
+const years = ['2050', '2100']
 
+let year = 2050
 
-let max = d3.max(world.features.map(f => +f.properties["growth_2022"]));
+let max = d3.max(world.features.map(f => +f.properties["growth_2050"]));
 
 const radius = d3.scaleSqrt()
     .domain([0, max])
     .range([0, 60])
 
-
 const simulation = d3.forceSimulation(world.features)
     .force("x", d3.forceX(d => projection(d.geometry.coordinates)[0]))
     .force("y", d3.forceY(d => projection(d.geometry.coordinates)[1]))
-    .force("collide", d3.forceCollide(d => 1 + radius(d.properties.growth_2022)))
-    .stop()
+    .force("collide", d3.forceCollide(d => 1 + radius(d.properties.growth_2050)))
+    .on('tick', ticked)
 
 
-for (let i = 0; i < 300; i++) {
-    simulation.tick();
-}
+    console.log(world.features)
+
 
 svg.selectAll("circle")
     .data(world.features)
     .enter().append("circle")
     .attr('class', d => d.properties.NAME)
-    .attr("r", d => radius(d.properties.growth_2022))
+    .attr("r", d => radius(d.properties.growth_2050))
     .attr("cx", d => d.x)
     .attr("cy", d => d.y)
     .attr("fill", "steelblue")
@@ -67,48 +67,29 @@ svg.selectAll("circle")
     .attr("stroke", "steelblue");
 
 
+function ticked(){
 
-const years = ['2022', '2050', '2100']
+    svg.selectAll("circle")
+    .attr("r", d => radius(d.properties['growth_' + year]))
+    .attr("cx", d => d.x)
+    .attr("cy", d => d.y)
 
+}
 
-const update = (year) => {
+const update = (y) => {
 
-    console.log(year)
+    year = y;
 
     max = d3.max(world.features.map(f => +f.properties["growth_" + year]));
-
-    console.log(max)
 
     radius.domain([0, max])
 
     simulation
-    .force("x", null)
-    .force("y", null)
-    .force("collide", null);
-
-    simulation
-    .force("x", d3.forceX(d => projection(d.geometry.coordinates)[0]))
-    .force("y", d3.forceY(d => projection(d.geometry.coordinates)[1]))
     .force("collide", d3.forceCollide(d => 1 + radius(d.properties["growth_" + year])))
-    
-
-    for (let i = 0; i < 300; i++) {
-        simulation.tick();
-
-        
-    }
-
-    svg.selectAll("circle")
-    .transition()
-    .duration(100)
-    .attr("r", d => radius(d.properties["growth_" + year]))
-    .attr("y", d => d.y)
-    .attr('x', d => d.x)
-    
+    .alpha(3)
+    .restart()
     
 }
-
-let year = 2022
 
 years.forEach(y => {
     d3.select('.buttons-wrapper')
@@ -119,16 +100,3 @@ years.forEach(y => {
     $('.button-' + y).addEventListener('click', () => update(y))
 })
 
-// const watchScroll = () => {
-//     if (atomEl.getBoundingClientRect().top < window.innerHeight * 0.4) {
-
-//         wait(300).then(() => update(year, true))
-
-//         console.log(year)
-
-//     } else {
-//         window.requestAnimationFrame(watchScroll)
-//     }
-// }
-
-// window.requestAnimationFrame(watchScroll)
