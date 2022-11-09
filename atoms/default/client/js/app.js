@@ -51,9 +51,6 @@ const simulation = d3.forceSimulation(world.features)
     .stop()
 
 
-    console.log(world.features)
-
-
 for (let i = 0; i < 300; i++) {
     simulation.tick();
 }
@@ -85,20 +82,28 @@ const update = (year) => {
     radius.domain([0, max])
 
     simulation
+    .force("x", null)
+    .force("y", null)
+    .force("collide", null);
+
+    simulation
+    .force("x", d3.forceX(d => projection(d.geometry.coordinates)[0]))
+    .force("y", d3.forceY(d => projection(d.geometry.coordinates)[1]))
     .force("collide", d3.forceCollide(d => 1 + radius(d.properties["growth_" + year])))
     
 
     for (let i = 0; i < 300; i++) {
         simulation.tick();
 
+        
     }
 
     svg.selectAll("circle")
     .transition()
     .duration(100)
     .attr("r", d => radius(d.properties["growth_" + year]))
-    .attr("cy", d => d.y)
-    .attr('cx', d => d.x)
+    .attr("y", d => d.y)
+    .attr('x', d => d.x)
     
     
 }
