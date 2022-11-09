@@ -37,6 +37,7 @@ const svg = d3.select('.dorling-interactive-wrapper')
 
 const years = ['2050', '2100']
 
+
 let year = 2050
 
 let max = d3.max(world.features.map(f => +f.properties["growth_2050"]));
@@ -58,13 +59,15 @@ const simulation = d3.forceSimulation(world.features)
 svg.selectAll("circle")
     .data(world.features)
     .enter().append("circle")
-    .attr('class', d => d.properties.NAME)
+    .attr('class', d =>  {
+        if(d.properties['SDG Region'])
+        {
+            return d.properties.NAME + " " + d.properties['SDG Region'].replace(/ /g, "-")
+        }
+    })
     .attr("r", d => radius(d.properties.growth_2050))
     .attr("cx", d => d.x)
     .attr("cy", d => d.y)
-    .attr("fill", "steelblue")
-    .attr("fill-opacity", 0.3)
-    .attr("stroke", "steelblue");
 
 
 function ticked(){

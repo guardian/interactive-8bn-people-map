@@ -21,9 +21,15 @@ export async function render() {
         let countryPop = population.filter(f => f['ISO3 Alpha-code'] === id)
         //let countryEst = estimate.filter(f => f['ISO3 Alpha-code'] === id)
 
+        
+
         if(countryPop.length > 0)
         {
+            console.log(countryPop[0]['SDG Region'])
 
+            element.properties['SDG Region'] = countryPop[0]['SDG Region']
+            
+            //element.properties['SDG Region'] = 
             //console.log(element.properties.NAME)
             countryPop.forEach(f => {
 
