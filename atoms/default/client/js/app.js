@@ -43,7 +43,7 @@ let max = d3.max(world.features.map(f => +f.properties["growth_2050"]));
 
 const radius = d3.scaleSqrt()
     .domain([0, max])
-    .range([0, 60])
+    .range([0, 40])
 
 const simulation = d3.forceSimulation(world.features)
     .force("x", d3.forceX(d => projection(d.geometry.coordinates)[0]))
