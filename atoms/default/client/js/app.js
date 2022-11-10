@@ -12,20 +12,20 @@ const width = atomEl.getBoundingClientRect().width;
 const height = isMobile ? (window.innerHeight / 2) : window.innerHeight;
 
 const projection = geoGilbert()
-
+console.log('hola')
 const extent = {
     type: "Sphere",
 
     coordinates: [
-        [-180, -90],
-        [180, -90],
-        [180, 90],
-        [-180, 90]
+        [-90, -60],
+        [180, -60],
+        [180, 60],
+        [-90, 60]
     ]
 }
 
 projection
-.fitExtent([[20, 0], [width - 30, height]], extent);
+.fitExtent([[0, 0], [width, height]], extent);
 
 const path = d3.geoPath(projection);
 
@@ -43,7 +43,7 @@ let max = d3.max(world.features.map(f => +f.properties["growth_2050"]));
 
 const radius = d3.scaleSqrt()
     .domain([0, max])
-    .range([0, 40])
+    .range([0, 50])
 
 const simulation = d3.forceSimulation(world.features)
     .force("x", d3.forceX(d => projection(d.geometry.coordinates)[0]))
@@ -85,6 +85,13 @@ function ticked(){
 
 const update = (y) => {
 
+    d3.selectAll('button')
+    .classed('selected', false)
+
+    d3.select('.button-' + y)
+    .classed('selected', true)
+
+
     year = y;
 
     max = d3.max(world.features.map(f => +f.properties["growth_" + year]));
@@ -101,8 +108,14 @@ const update = (y) => {
 years.forEach(y => {
     d3.select('.buttons-wrapper')
     .append('button')
-    .attr('class', 'button-' + y)
+    .attr('class', 'gv-button button-' + y)
     .html(y)
+
+    if(y == '2050')
+    {
+        d3.select('.button-' + y)
+        .classed('selected', true)
+    }
 
     $('.button-' + y).addEventListener('click', () => update(y))
 })

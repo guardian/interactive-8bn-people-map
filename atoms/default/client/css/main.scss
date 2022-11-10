@@ -26,6 +26,38 @@ root {
 .Australia-and-New-Zealand{ fill:#0077b6; fill-opacity: .7; stroke:#0077b6; stroke-width: 2px;}
 .Eastern-and-South-Eastern-Asia{fill:#ed6300; fill-opacity: .7; stroke:#ed6300; stroke-width: 2px;}
 
+.gv-button{
+    font-size: 14px;
+    line-height: 20px;
+    font-family: "Guardian Text Sans Web","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+    cursor: pointer;
+    display: inline-block;
+    line-height: 120%;
+    color: #121212;
+    border-radius: 100px;
+    border: 1px solid #121212;
+    height: 36px;
+    line-height: 22px;
+    -webkit-font-feature-settings: 'pnum' on,'lnum' on;
+    font-feature-settings: 'pnum' on,'lnum' on;
+    background: #fff;
+    position: relative;
+    //margin-bottom: 8px;
+    margin-top: 10px;
+    width: 160px;
+    margin-right: 2px;
+
+    &.selected{
+        background: #052962;
+        color: #fff;
+        -moz-user-select: none;
+        user-select: none;
+        box-shadow: none;
+        border:none;
+        outline: none;
+    }
+}
+
 // uncomment to test
 // .gv-wrapper {
 //     height: 400px;
