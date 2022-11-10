@@ -86,8 +86,14 @@ const update = (y) => {
     radius.domain([0, max])
     
 
+    simulation.nodes(null)
+
     simulation
+    .nodes(world.features)
+    .force("x", d3.forceX(d => projection(d.geometry.coordinates)[0]))
+    .force("y", d3.forceY(d => projection(d.geometry.coordinates)[1]))
     .force("collide", d3.forceCollide(d => 1 + radius(d.properties["growth_" + year])))
+    .stop()
 
     
 
