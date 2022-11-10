@@ -58,7 +58,7 @@ export async function render() {
         // }
     });
 
-    //fs.writeFileSync(`assets/world-growth.json`, JSON.stringify(world));
+    fs.writeFileSync(`assets/world-growth.json`, JSON.stringify(world));
 
     
 

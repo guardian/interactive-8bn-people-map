@@ -17,14 +17,14 @@ root {
     padding: 0;
 }
 
-.Central-and-Southern-Asia{ fill:#8f2270;}
-.Europe-and-Northern-America{ fill:#cbae87;}
-.Northern-Africa-and-Western-Asia{ fill:#00b2ff;}
-.Oceania{fill:#1d716b;}
-.Sub-Saharan-Africa{ fill:#4fc480;}
-.Latin-America-and-the-Caribbean{ fill:#a1a1a1;}
-.Australia-and-New-Zealand{ fill:#0077b6;}
-.Eastern-and-South-Eastern-Asia{fill:#ed6300;}
+.Central-and-Southern-Asia{ fill:#8f2270; fill-opacity: .7; stroke:#8f2270; stroke-width: 2px;}
+.Europe-and-Northern-America{ fill:#cbae87; fill-opacity: .7; stroke:#cbae87; stroke-width: 2px;}
+.Northern-Africa-and-Western-Asia{ fill:#00b2ff; fill-opacity: .7; stroke:#00b2ff; stroke-width: 2px;}
+.Oceania{fill:#1d716b; fill-opacity: .7; stroke:#1d716b; stroke-width: 2px;}
+.Sub-Saharan-Africa{ fill:#4fc480; fill-opacity: .7; stroke:#4fc480; stroke-width: 2px;}
+.Latin-America-and-the-Caribbean{ fill:#a1a1a1; fill-opacity: .7; stroke:#a1a1a1; stroke-width: 2px;}
+.Australia-and-New-Zealand{ fill:#0077b6; fill-opacity: .7; stroke:#0077b6; stroke-width: 2px;}
+.Eastern-and-South-Eastern-Asia{fill:#ed6300; fill-opacity: .7; stroke:#ed6300; stroke-width: 2px;}
 
 // uncomment to test
 // .gv-wrapper {
