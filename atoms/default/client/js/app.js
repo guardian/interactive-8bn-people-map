@@ -2,7 +2,9 @@ import * as d3 from 'd3'
 import world from "assets/world-growth.json"
 import { geoGilbert } from "d3-geo-projection"
 import { $, $$, wait, duplicate } from 'shared/js/util'
+import moment from 'moment'
 
+console.log(moment.utc(2690000).format('HH:mm:ss'))
 
 const isMobile = window.matchMedia('(max-width: 720px)').matches;
 
